@@ -4,16 +4,21 @@ import { loadTasks } from '@lib/tasks/actions/loadTasks';
 
 export const Tasks = () => {
   const [tasks, setTasks] = React.useState<{ name: string  }[]>([])
+  const [isLoading, setIsLoading] = React.useState(false);
+
 
   const handleLoad = async () => {
-    const t = await loadTasks();
+    setIsLoading(true)
+
+    const t = await loadTasks(true);
     setTasks(t)
+    setIsLoading(false)
   }
 
     return (
         <>
           <button onClick={handleLoad} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Load
+            {isLoading ? 'Loading...' : 'Load'}
           </button>
 
           {tasks.map((task) => (
